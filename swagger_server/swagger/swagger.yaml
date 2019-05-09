@@ -9,28 +9,28 @@ info:
     url: "https://www.gnu.org/licenses/agpl-3.0.en.html"
 host: "localhost:8080"
 tags:
-- name: "plants"
-  description: "Operations about plants"
+  - name: "plants"
+    description: "Operations about plants"
 schemes:
-- "https"
-- "http"
+  - "https"
+  - "http"
 paths:
   /sink:
     put:
       tags:
-      - "plants"
+        - "plants"
       summary: "Create a new plant"
       description: "This can be done by the sink"
       operationId: "add_plant"
       consumes:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "plant"
-        description: "a plant object"
-        required: true
-        schema:
-          $ref: "#/definitions/plant"
+        - in: "body"
+          name: "plant"
+          description: "a plant object"
+          required: true
+          schema:
+            $ref: "#/definitions/plant"
       responses:
         200:
           description: "Ok"
@@ -42,25 +42,25 @@ paths:
   /sink/{plant_id}:
     post:
       tags:
-      - "plants"
+        - "plants"
       summary: "Set the sensed values"
       description: "Set sensed value for the microbit with plant_id."
       operationId: "set_values"
       consumes:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "plant_id"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - in: "body"
-        name: "data"
-        required: false
-        schema:
-          type: "array"
-          items:
-            $ref: "#/definitions/data"
+        - name: "plant_id"
+          in: "path"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "body"
+          name: "data"
+          required: false
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/data"
       responses:
         200:
           description: "Ok"
@@ -88,3 +88,6 @@ definitions:
         format: "int64"
       description:
         type: "string"
+    required:
+      - microbit
+      - network

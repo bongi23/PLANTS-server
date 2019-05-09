@@ -16,6 +16,10 @@ def get_db():
     return g.mongo_db
 
 
+def get_collection(name=None):
+    return get_db().get_collection(name=name)
+
+
 def _deserialize(data, klass):
     """Deserializes dict, list, str into an object.
 
