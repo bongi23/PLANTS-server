@@ -6,7 +6,7 @@ from swagger_server import util
 from flask import abort
 
 
-def get_data(plant_id, sensor, min_value, max_value, min_time, max_time):  # noqa: E501
+def get_data(plant_id, sensor=None, min_value=None, max_value=None, min_time=None, max_time=None):  # noqa: E501
     """Get data of a plant
 
     This can be done by 3rd party app # noqa: E501

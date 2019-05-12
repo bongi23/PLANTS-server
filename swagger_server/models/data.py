@@ -15,9 +15,11 @@ class Data(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, sensor: str=None, value: int=None, timestamp: int=None):  # noqa: E501
+    def __init__(self, microbit: int=None, sensor: str=None, value: int=None, timestamp: int=None):  # noqa: E501
         """Data - a model defined in Swagger
 
+        :param microbit: The microbit of this Data.  # noqa: E501
+        :type microbit: int
         :param sensor: The sensor of this Data.  # noqa: E501
         :type sensor: str
         :param value: The value of this Data.  # noqa: E501
@@ -26,17 +28,20 @@ class Data(Model):
         :type timestamp: int
         """
         self.swagger_types = {
+            'microbit': int,
             'sensor': str,
             'value': int,
             'timestamp': int
         }
 
         self.attribute_map = {
+            'microbit': 'microbit',
             'sensor': 'sensor',
             'value': 'value',
             'timestamp': 'timestamp'
         }
 
+        self._microbit = microbit
         self._sensor = sensor
         self._value = value
         self._timestamp = timestamp
@@ -51,6 +56,29 @@ class Data(Model):
         :rtype: Data
         """
         return util.deserialize_model(dikt, cls)
+
+    @property
+    def microbit(self) -> int:
+        """Gets the microbit of this Data.
+
+
+        :return: The microbit of this Data.
+        :rtype: int
+        """
+        return self._microbit
+
+    @microbit.setter
+    def microbit(self, microbit: int):
+        """Sets the microbit of this Data.
+
+
+        :param microbit: The microbit of this Data.
+        :type microbit: int
+        """
+        if microbit is None:
+            raise ValueError("Invalid value for `microbit`, must not be `None`")  # noqa: E501
+
+        self._microbit = microbit
 
     @property
     def sensor(self) -> str:

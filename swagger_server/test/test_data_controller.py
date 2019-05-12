@@ -17,10 +17,16 @@ class TestDataController(BaseTestCase):
 
         Get data of a plant
         """
+        query_string = [('sensor', 'sensor_example'),
+                        ('min_value', 56),
+                        ('max_value', 56),
+                        ('min_time', 789),
+                        ('max_time', 789)]
         response = self.client.open(
-            '/plants/{plant_id}/data'.format(plant_id=789, sensor='sensor_example', min_value=56, max_value=56, min_time=789, max_time=789),
+            '/plants/{plant_id}/data'.format(plant_id=789),
             method='GET',
-            content_type='application/json')
+            content_type='application/json',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
