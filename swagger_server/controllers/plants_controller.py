@@ -53,3 +53,5 @@ def set_values(plant_id, data=None):  # noqa: E501
         for d in data:
             sensed_data.insert({'microbit': plant_id, 'data': d, 'time': time()})
         return 'Success'
+    else:
+        abort(400)
