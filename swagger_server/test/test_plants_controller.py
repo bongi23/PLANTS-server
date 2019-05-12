@@ -24,6 +24,17 @@ class TestPlantsController(BaseTestCase):
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
+    def test_get_plants(self):
+        """Test case for get_plants
+
+        Get all the known plants
+        """
+        response = self.client.open(
+            '/plants',
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
 
 if __name__ == '__main__':
     import unittest

@@ -5,7 +5,8 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
-from swagger_server.models.event20parameter import Event20parameter  # noqa: E501
+from swagger_server.models.event import Event  # noqa: E501
+from swagger_server.models.inline_response2002 import InlineResponse2002  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 
@@ -17,10 +18,10 @@ class TestEventController(BaseTestCase):
 
         Register to sensors' event
         """
-        event = Event20parameter()
+        event = Event()
         response = self.client.open(
-            '/subscribe/{plant_id}'.format(plant_id=789),
-            method='POST',
+            '/plants/{plant_id}/event'.format(plant_id=789),
+            method='PUT',
             data=json.dumps(event),
             content_type='application/json')
         self.assert200(response,
@@ -32,8 +33,8 @@ class TestEventController(BaseTestCase):
         Unregister to sensors' event
         """
         response = self.client.open(
-            '/unsubscribe/{plant_id}'.format(plant_id=789),
-            method='PUT')
+            '/plants/event/{event_id}'.format(event_id='event_id_example'),
+            method='DELETE')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

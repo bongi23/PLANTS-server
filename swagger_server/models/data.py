@@ -70,6 +70,8 @@ class Data(Model):
         :param sensor: The sensor of this Data.
         :type sensor: str
         """
+        if sensor is None:
+            raise ValueError("Invalid value for `sensor`, must not be `None`")  # noqa: E501
 
         self._sensor = sensor
 
@@ -91,6 +93,8 @@ class Data(Model):
         :param value: The value of this Data.
         :type value: int
         """
+        if value is None:
+            raise ValueError("Invalid value for `value`, must not be `None`")  # noqa: E501
 
         self._value = value
 
@@ -112,5 +116,7 @@ class Data(Model):
         :param timestamp: The timestamp of this Data.
         :type timestamp: int
         """
+        if timestamp is None:
+            raise ValueError("Invalid value for `timestamp`, must not be `None`")  # noqa: E501
 
         self._timestamp = timestamp

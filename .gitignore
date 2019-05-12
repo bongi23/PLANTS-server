@@ -62,8 +62,3 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
-
-# other
-.idea/
-.swagger*
-git_push.sh

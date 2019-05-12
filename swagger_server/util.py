@@ -1,8 +1,9 @@
 import datetime
-from flask_pymongo import PyMongo
-from flask import g, current_app
+
 import six
 import typing
+from flask import current_app, g
+from flask_pymongo import PyMongo
 
 
 def get_db():
