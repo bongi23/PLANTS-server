@@ -15,26 +15,31 @@ class Data(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, sensor: str=None, value: int=None):  # noqa: E501
+    def __init__(self, sensor: str=None, value: int=None, timestamp: int=None):  # noqa: E501
         """Data - a model defined in Swagger
 
         :param sensor: The sensor of this Data.  # noqa: E501
         :type sensor: str
         :param value: The value of this Data.  # noqa: E501
         :type value: int
+        :param timestamp: The timestamp of this Data.  # noqa: E501
+        :type timestamp: int
         """
         self.swagger_types = {
             'sensor': str,
-            'value': int
+            'value': int,
+            'timestamp': int
         }
 
         self.attribute_map = {
             'sensor': 'sensor',
-            'value': 'value'
+            'value': 'value',
+            'timestamp': 'timestamp'
         }
 
         self._sensor = sensor
         self._value = value
+        self._timestamp = timestamp
 
     @classmethod
     def from_dict(cls, dikt) -> 'Data':
@@ -88,3 +93,24 @@ class Data(Model):
         """
 
         self._value = value
+
+    @property
+    def timestamp(self) -> int:
+        """Gets the timestamp of this Data.
+
+
+        :return: The timestamp of this Data.
+        :rtype: int
+        """
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, timestamp: int):
+        """Sets the timestamp of this Data.
+
+
+        :param timestamp: The timestamp of this Data.
+        :type timestamp: int
+        """
+
+        self._timestamp = timestamp

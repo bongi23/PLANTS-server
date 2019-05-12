@@ -18,10 +18,10 @@ REQUIRES = ["connexion"]
 setup(
     name=NAME,
     version=VERSION,
-    description="P.L.A.N.T.S. sink api",
+    description="P.L.A.N.T.S. 3rd party api",
     author_email="",
     url="",
-    keywords=["Swagger", "P.L.A.N.T.S. sink api"],
+    keywords=["Swagger", "P.L.A.N.T.S. 3rd party api"],
     install_requires=REQUIRES,
     packages=find_packages(),
     package_data={'': ['swagger/api.yaml']},
@@ -29,7 +29,7 @@ setup(
     entry_points={
         'console_scripts': ['swagger_server=swagger_server.__main__:main']},
     long_description="""\
-    Provides functions to P.L.A.N.T.S. sinks
+    Provides functions to 3rd parties
     """
 )
 
