@@ -15,26 +15,36 @@ class Data(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, sensor: str=None, value: int=None):  # noqa: E501
+    def __init__(self, microbit: int=None, sensor: str=None, value: int=None, timestamp: int=None):  # noqa: E501
         """Data - a model defined in Swagger
 
+        :param microbit: The microbit of this Data.  # noqa: E501
+        :type microbit: int
         :param sensor: The sensor of this Data.  # noqa: E501
         :type sensor: str
         :param value: The value of this Data.  # noqa: E501
         :type value: int
+        :param timestamp: The timestamp of this Data.  # noqa: E501
+        :type timestamp: int
         """
         self.swagger_types = {
+            'microbit': int,
             'sensor': str,
-            'value': int
+            'value': int,
+            'timestamp': int
         }
 
         self.attribute_map = {
+            'microbit': 'microbit',
             'sensor': 'sensor',
-            'value': 'value'
+            'value': 'value',
+            'timestamp': 'timestamp'
         }
 
+        self._microbit = microbit
         self._sensor = sensor
         self._value = value
+        self._timestamp = timestamp
 
     @classmethod
     def from_dict(cls, dikt) -> 'Data':
@@ -46,6 +56,29 @@ class Data(Model):
         :rtype: Data
         """
         return util.deserialize_model(dikt, cls)
+
+    @property
+    def microbit(self) -> int:
+        """Gets the microbit of this Data.
+
+
+        :return: The microbit of this Data.
+        :rtype: int
+        """
+        return self._microbit
+
+    @microbit.setter
+    def microbit(self, microbit: int):
+        """Sets the microbit of this Data.
+
+
+        :param microbit: The microbit of this Data.
+        :type microbit: int
+        """
+        if microbit is None:
+            raise ValueError("Invalid value for `microbit`, must not be `None`")  # noqa: E501
+
+        self._microbit = microbit
 
     @property
     def sensor(self) -> str:
@@ -65,6 +98,8 @@ class Data(Model):
         :param sensor: The sensor of this Data.
         :type sensor: str
         """
+        if sensor is None:
+            raise ValueError("Invalid value for `sensor`, must not be `None`")  # noqa: E501
 
         self._sensor = sensor
 
@@ -86,5 +121,30 @@ class Data(Model):
         :param value: The value of this Data.
         :type value: int
         """
+        if value is None:
+            raise ValueError("Invalid value for `value`, must not be `None`")  # noqa: E501
 
         self._value = value
+
+    @property
+    def timestamp(self) -> int:
+        """Gets the timestamp of this Data.
+
+
+        :return: The timestamp of this Data.
+        :rtype: int
+        """
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, timestamp: int):
+        """Sets the timestamp of this Data.
+
+
+        :param timestamp: The timestamp of this Data.
+        :type timestamp: int
+        """
+        if timestamp is None:
+            raise ValueError("Invalid value for `timestamp`, must not be `None`")  # noqa: E501
+
+        self._timestamp = timestamp

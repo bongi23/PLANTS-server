@@ -70,6 +70,8 @@ class Plant(Model):
         :param microbit: The microbit of this Plant.
         :type microbit: int
         """
+        if microbit is None:
+            raise ValueError("Invalid value for `microbit`, must not be `None`")  # noqa: E501
 
         self._microbit = microbit
 
@@ -91,6 +93,8 @@ class Plant(Model):
         :param network: The network of this Plant.
         :type network: int
         """
+        if network is None:
+            raise ValueError("Invalid value for `network`, must not be `None`")  # noqa: E501
 
         self._network = network
 

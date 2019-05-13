@@ -3,17 +3,15 @@
 import connexion
 
 from swagger_server import encoder
-from flask import Flask
-from flakon import SwaggerBlueprint
-import os
+from celery import Celery
+from flask import g
+
 
 def main():
     app = connexion.App(__name__, specification_dir='./swagger/')
-    app.json_encoder = encoder.JSONEncoder
-
-    app.add_api('api.yaml', arguments={'title': 'P.L.A.N.T.S. sink api'})
-
-    app.run(port=8080, debug=True)
+    app.app.json_encoder = encoder.JSONEncoder
+    app.add_api('swagger.yaml', arguments={'title': 'P.L.A.N.T.S. sink api'})
+    app.run(port=8080)
 
 
 if __name__ == '__main__':
