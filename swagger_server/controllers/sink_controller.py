@@ -36,8 +36,15 @@ def add_plant(plant):  # noqa: E501
     :rtype: None
     """
     if connexion.request.is_json:
-        plant = Plant.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+        plant = connexion.request.get_json()  # noqa: E501
+
+    plants = util.get_collection('plants')
+    if plants.find({'microbit':plant['microbit']}) is not None:
+        abort(409)
+
+    plants.insert_one(plant)
+
+    return 'Success'
 
 
 def set_values(plant_id, data=None):  # noqa: E501
@@ -60,12 +67,52 @@ def set_values(plant_id, data=None):  # noqa: E501
         data_coll = util.get_collection('data')
         data_coll.insert_one(data)
 
-        result = add_together.delay(23, 42)
-        result.wait()  # 65
-    return 'do some magic!'
+        check_event.delay(data)
+    return 'Success'
 
 
 @celery.task()
-def add_together(a, b):
-    print('ciao')
-    return a + b
+def notify(address):
+    pass
+
+
+@celery.task()
+def check_event(data):
+    events = util.get_collection('events').find({'microbit': data['microbit']})
+    match_value = False
+    match_time = False
+
+    for e in events:
+        if data['sensor'] == e['sensor']:
+            if hasattr(e, 'min_value') and hasattr(e, 'max_value'):
+                if e['min_value'] <= data['value'] <= e['max_value']:
+                    match_value = True
+            elif hasattr(e, 'min_value'):
+                if e['min_value'] <= data['value']:
+                    match_value = True
+            elif hasattr(e, 'max_value'):
+                if e['max_value'] >= data['value']:
+                    match_value = True
+            else:
+                match_value = True
+
+            if hasattr(e, 'min_time') and hasattr(e, 'max_time'):
+                if e['min_time'] <= data['timestamp'] <= e['max_time']:
+                    match_time = True
+            elif hasattr(e, 'min_time'):
+                if e['min_time'] <= data['timestamp']:
+                    match_time = True
+            elif hasattr(e, 'max_time'):
+                if e['max_time'] >= data['timestamp']:
+                    match_time = True
+            else:
+                match_time = True
+
+            if hasattr(e, 'op'):
+                if e['op'] == 'or':
+                    res = match_value or match_time
+            else:
+                res = match_value and match_time
+
+            if res:
+                notify.delay(e['return_address'], data)

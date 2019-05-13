@@ -74,6 +74,11 @@ definitions:
     - "data"
     - "return_address"
     properties:
+      microbit:
+        type:
+          integer
+        format:
+          int64
       data:
         $ref: "#/definitions/filter"
       return_address:
@@ -93,6 +98,8 @@ definitions:
       max_time:
         type: "integer"
         format: "int64"
+      frequency:
+        type: integer
   data:
     type: "object"
     required:
