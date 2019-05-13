@@ -183,11 +183,14 @@ definitions:
     - "data"
     - "return_address"
     properties:
+      microbit:
+        type: "integer"
+        format: "int64"
       data:
-        $ref: "#/definitions/filter"
+        $ref: "#/definitions/event_param"
       return_address:
         type: "string"
-  filter:
+  event_param:
     type: "object"
     properties:
       sensor:
@@ -202,6 +205,8 @@ definitions:
       max_time:
         type: "integer"
         format: "int64"
+      frequency:
+        type: "integer"
   data:
     type: "object"
     required:
@@ -222,9 +227,10 @@ definitions:
         type: "integer"
         format: "int64"
     example:
+      microbit: 0
       sensor: "sensor"
-      value: 0
-      timestamp: 6
+      value: 6
+      timestamp: 1
   plant:
     type: "object"
     required:
@@ -244,6 +250,10 @@ definitions:
       description: "description"
       network: 6
   inline_response_200:
+    properties:
+      event_id:
+        type: "string"
+  inline_response_200_1:
     properties:
       event_id:
         type: "string"

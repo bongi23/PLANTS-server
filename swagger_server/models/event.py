@@ -6,7 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.filter import Filter  # noqa: F401,E501
+from swagger_server.models.event_param import EventParam  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -16,24 +16,29 @@ class Event(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, data: Filter=None, return_address: str=None):  # noqa: E501
+    def __init__(self, microbit: int=None, data: EventParam=None, return_address: str=None):  # noqa: E501
         """Event - a model defined in Swagger
 
+        :param microbit: The microbit of this Event.  # noqa: E501
+        :type microbit: int
         :param data: The data of this Event.  # noqa: E501
-        :type data: Filter
+        :type data: EventParam
         :param return_address: The return_address of this Event.  # noqa: E501
         :type return_address: str
         """
         self.swagger_types = {
-            'data': Filter,
+            'microbit': int,
+            'data': EventParam,
             'return_address': str
         }
 
         self.attribute_map = {
+            'microbit': 'microbit',
             'data': 'data',
             'return_address': 'return_address'
         }
 
+        self._microbit = microbit
         self._data = data
         self._return_address = return_address
 
@@ -49,22 +54,43 @@ class Event(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def data(self) -> Filter:
+    def microbit(self) -> int:
+        """Gets the microbit of this Event.
+
+
+        :return: The microbit of this Event.
+        :rtype: int
+        """
+        return self._microbit
+
+    @microbit.setter
+    def microbit(self, microbit: int):
+        """Sets the microbit of this Event.
+
+
+        :param microbit: The microbit of this Event.
+        :type microbit: int
+        """
+
+        self._microbit = microbit
+
+    @property
+    def data(self) -> EventParam:
         """Gets the data of this Event.
 
 
         :return: The data of this Event.
-        :rtype: Filter
+        :rtype: EventParam
         """
         return self._data
 
     @data.setter
-    def data(self, data: Filter):
+    def data(self, data: EventParam):
         """Sets the data of this Event.
 
 
         :param data: The data of this Event.
-        :type data: Filter
+        :type data: EventParam
         """
         if data is None:
             raise ValueError("Invalid value for `data`, must not be `None`")  # noqa: E501

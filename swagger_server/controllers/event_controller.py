@@ -1,7 +1,5 @@
 import connexion
-import six
 
-from swagger_server.models.event import Event  # noqa: E501
 from swagger_server.models.inline_response200 import InlineResponse200  # noqa: E501
 from swagger_server import util
 from flask import abort
@@ -23,10 +21,16 @@ def subscribe(plant_id, event):  # noqa: E501
         event = connexion.request.get_json()  # noqa: E501
 
         plant = util.get_collection('plants').find({'microbit': plant_id})
+
+        if plant_id != event['microbit']:
+            abort(400)
+
         if plant is None:
             abort(404)
+
         events = util.get_collection('events')
         event_id = events.insert_one(event)
+
     return {'event_id': event_id}
 
 
@@ -41,8 +45,10 @@ def unsubscribe(event_id):  # noqa: E501
     :rtype: None
     """
     events = util.get_collection('events')
+
     if(events.find_one({'event_id': event_id})) is None:
         abort(404)
+
     events.delete_one({'event_id': event_id})
 
     return 'Success'
