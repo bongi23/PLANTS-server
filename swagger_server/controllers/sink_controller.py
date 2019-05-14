@@ -1,6 +1,6 @@
 import connexion
 from swagger_server import util
-from flask import abort, current_app , g
+from flask import abort
 from celery import Celery
 
 
@@ -36,7 +36,7 @@ def add_plant(plant):  # noqa: E501
         plant = connexion.request.get_json()  # noqa: E501
 
     plants = util.get_collection('plants')
-    if plants.find({'microbit':plant['microbit']}) is not None:
+    if plants.find_one({'microbit': plant['microbit']}) is not None:
         abort(409)
 
     plants.insert_one(plant)
@@ -58,8 +58,12 @@ def set_values(plant_id, data=None):  # noqa: E501
     """
     if connexion.request.is_json:
         plants = util.get_collection('plants')
+
         if plants.find_one({'microbit': plant_id}) is None:
             abort(404)
+        if data['microbit'] != plant_id:
+            abort(400)
+
         data = connexion.request.get_json()  # noqa: E501
         data_coll = util.get_collection('data')
         data_coll.insert_one(data)
