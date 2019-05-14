@@ -4,6 +4,7 @@ import connexion
 from flask_testing import TestCase
 
 from swagger_server.encoder import JSONEncoder
+from flask import json
 
 
 class BaseTestCase(TestCase):

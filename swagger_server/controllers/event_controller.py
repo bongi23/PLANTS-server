@@ -3,6 +3,7 @@ import connexion
 from swagger_server.models.inline_response200 import InlineResponse200  # noqa: E501
 from swagger_server import util
 from flask import abort
+from flask_pymongo import ObjectId
 
 
 def subscribe(plant_id, event):  # noqa: E501
@@ -27,7 +28,6 @@ def subscribe(plant_id, event):  # noqa: E501
 
         if plant is None:
             abort(404)
-        print(plant)
         events = util.get_collection('events')
         event_id = events.insert_one(event)
 
@@ -46,9 +46,9 @@ def unsubscribe(event_id):  # noqa: E501
     """
     events = util.get_collection('events')
 
-    if(events.find_one({'event_id': event_id})) is None:
+    if(events.find_one({'_id': ObjectId(event_id)})) is None:
         abort(404)
 
-    events.delete_one({'event_id': event_id})
+    events.delete_one({'_id': ObjectId(event_id)})
 
     return 'Success'
