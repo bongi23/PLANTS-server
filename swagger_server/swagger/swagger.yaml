@@ -255,12 +255,6 @@ definitions:
         type: "integer"
       max_value:
         type: "integer"
-      min_time:
-        type: "integer"
-        format: "int64"
-      max_time:
-        type: "integer"
-        format: "int64"
       frequency:
         type: integer
   data:

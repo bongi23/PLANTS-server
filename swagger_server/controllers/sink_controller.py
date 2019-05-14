@@ -77,7 +77,6 @@ def notify(address):
 def check_event(data):
     events = util.get_collection('events').find({'microbit': data['microbit']})
     match_value = False
-    match_time = False
 
     for e in events:
         if data['sensor'] == e['sensor']:
@@ -94,23 +93,5 @@ def check_event(data):
             else:
                 match_value = True
 
-            if hasattr(e, 'min_time') and hasattr(e, 'max_time'):
-                if e['min_time'] <= data['timestamp'] <= e['max_time']:
-                    match_time = True
-            elif hasattr(e, 'min_time'):
-                if e['min_time'] <= data['timestamp']:
-                    match_time = True
-            elif hasattr(e, 'max_time'):
-                if e['max_time'] >= data['timestamp']:
-                    match_time = True
-            else:
-                match_time = True
-
-            if hasattr(e, 'op'):
-                if e['op'] == 'or':
-                    res = match_value or match_time
-            else:
-                res = match_value and match_time
-
-            if res:
+            if match_value:
                 notify.delay(e['return_address'], data)

@@ -20,18 +20,18 @@ def subscribe(plant_id, event):  # noqa: E501
     if connexion.request.is_json:
         event = connexion.request.get_json()  # noqa: E501
 
-        plant = util.get_collection('plants').find({'microbit': plant_id})
+        plant = util.get_collection('plants').find_one({'microbit': plant_id})
 
         if plant_id != event['microbit']:
             abort(400)
 
         if plant is None:
             abort(404)
-
+        print(plant)
         events = util.get_collection('events')
         event_id = events.insert_one(event)
 
-    return {'event_id': str(event_id)}
+    return {'event_id': str(event_id.inserted_id)}
 
 
 def unsubscribe(event_id):  # noqa: E501

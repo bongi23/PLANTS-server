@@ -1,10 +1,6 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-from datetime import date, datetime  # noqa: F401
-
-from typing import List, Dict  # noqa: F401
-
 from swagger_server.models.base_model_ import Model
 from swagger_server import util
 
@@ -15,7 +11,7 @@ class EventParameter(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, sensor: str=None, min_value: int=None, max_value: int=None, min_time: int=None, max_time: int=None, frequency: int=None):  # noqa: E501
+    def __init__(self, sensor: str = None, min_value: int = None, max_value: int = None, frequency: int = None):  # noqa: E501
         """EventParam - a model defined in Swagger
 
         :param sensor: The sensor of this EventParam.  # noqa: E501
@@ -24,10 +20,6 @@ class EventParameter(Model):
         :type min_value: int
         :param max_value: The max_value of this EventParam.  # noqa: E501
         :type max_value: int
-        :param min_time: The min_time of this EventParam.  # noqa: E501
-        :type min_time: int
-        :param max_time: The max_time of this EventParam.  # noqa: E501
-        :type max_time: int
         :param frequency: The frequency of this EventParam.  # noqa: E501
         :type frequency: int
         """
@@ -35,8 +27,6 @@ class EventParameter(Model):
             'sensor': str,
             'min_value': int,
             'max_value': int,
-            'min_time': int,
-            'max_time': int,
             'frequency': int
         }
 
@@ -44,20 +34,16 @@ class EventParameter(Model):
             'sensor': 'sensor',
             'min_value': 'min_value',
             'max_value': 'max_value',
-            'min_time': 'min_time',
-            'max_time': 'max_time',
             'frequency': 'frequency'
         }
 
         self._sensor = sensor
         self._min_value = min_value
         self._max_value = max_value
-        self._min_time = min_time
-        self._max_time = max_time
         self._frequency = frequency
 
     @classmethod
-    def from_dict(cls, dikt) -> 'EventParam':
+    def from_dict(cls, dikt) -> 'EventParameter':
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -129,48 +115,6 @@ class EventParameter(Model):
         """
 
         self._max_value = max_value
-
-    @property
-    def min_time(self) -> int:
-        """Gets the min_time of this EventParam.
-
-
-        :return: The min_time of this EventParam.
-        :rtype: int
-        """
-        return self._min_time
-
-    @min_time.setter
-    def min_time(self, min_time: int):
-        """Sets the min_time of this EventParam.
-
-
-        :param min_time: The min_time of this EventParam.
-        :type min_time: int
-        """
-
-        self._min_time = min_time
-
-    @property
-    def max_time(self) -> int:
-        """Gets the max_time of this EventParam.
-
-
-        :return: The max_time of this EventParam.
-        :rtype: int
-        """
-        return self._max_time
-
-    @max_time.setter
-    def max_time(self, max_time: int):
-        """Sets the max_time of this EventParam.
-
-
-        :param max_time: The max_time of this EventParam.
-        :type max_time: int
-        """
-
-        self._max_time = max_time
 
     @property
     def frequency(self) -> int:

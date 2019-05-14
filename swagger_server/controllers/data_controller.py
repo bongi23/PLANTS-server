@@ -1,7 +1,3 @@
-import connexion
-import six
-
-from swagger_server.models.data import Data  # noqa: E501
 from swagger_server import util
 from flask import abort
 
@@ -25,6 +21,15 @@ def get_data(plant_id, sensor=None, min_value=None, max_value=None, min_time=Non
     :type max_time: int
 
     :rtype: List[Data]
+
+    Result is a list of json like:
+
+    {
+        sensor: string
+        value: int
+        time: int
+    }
+
     """
     plant = util.get_collection('plants').find_one({'microbit': plant_id})
     if plant is None:
