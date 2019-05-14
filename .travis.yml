@@ -8,6 +8,7 @@ install:
 - pip install --upgrade pytest
 - redis-server &
 - celery -A swagger_server.controllers.sink_controller.celery worker &
+services: mongodb
 script:
 - pytest --cov-config .coveragerc --cov swagger_server swagger_server/test
 after_success:
