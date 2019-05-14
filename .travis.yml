@@ -8,6 +8,6 @@ install:
 - redis-server &
 - celery -A swagger_server.controllers.sink_controller.celery worker &
 script:
-- pytest --cov-config .coveragerc --cov swagger_server swagger_server/tests
+- pytest --cov-config .coveragerc --cov swagger_server swagger_server/test
 after_success:
 - coveralls

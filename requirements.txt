@@ -5,3 +5,5 @@ flask_pymongo
 flask
 celery
 redis
+pytest
+pytest-cov
