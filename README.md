@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/bongi23/PLANTS-server.svg?token=fnFkY4h2CXiktq8gGght&branch=master)](https://travis-ci.com/bongi23/PLANTS-server)
+
 # Swagger generated server
 
 ## Overview
