@@ -31,7 +31,7 @@ def subscribe(plant_id, event):  # noqa: E501
         events = util.get_collection('events')
         event_id = events.insert_one(event)
 
-    return {'event_id': event_id}
+    return {'event_id': str(event_id)}
 
 
 def unsubscribe(event_id):  # noqa: E501
