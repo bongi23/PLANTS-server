@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/bongi23/PLANTS-server.svg?token=fnFkY4h2CXiktq8gGght&branch=master)](https://travis-ci.com/bongi23/PLANTS-server)
+[![Build Status](https://travis-ci.com/bongi23/PLANTS-server.svg?token=fnFkY4h2CXiktq8gGght&branch=master)](https://travis-ci.com/bongi23/PLANTS-server)  [![Coverage Status](https://coveralls.io/repos/github/bongi23/PLANTS-server/badge.svg?branch=master)](https://coveralls.io/github/bongi23/PLANTS-server?branch=master)
 
 # Swagger generated server
 
