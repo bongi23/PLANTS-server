@@ -82,7 +82,4 @@ class TestSinkController(BaseTestCase):
 
 if __name__ == '__main__':
     import unittest
-    get_collection('plants').delete_many({})
-    get_collection('events').delete_many({})
-    get_collection('data').delete_many({})
     unittest.main()

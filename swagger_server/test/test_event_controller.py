@@ -106,10 +106,9 @@ class TestEventController(BaseTestCase):
 
         self.assertEqual(None, get_collection('events').find_one({'_id': ObjectId(event_id)}))
 
+        get_collection('plants').delete_one({'microbit': id})
+
 
 if __name__ == '__main__':
     import unittest
-    get_collection('plants').delete_many({})
-    get_collection('events').delete_many({})
-    get_collection('data').delete_many({})
     unittest.main()
