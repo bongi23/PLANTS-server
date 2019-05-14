@@ -7,6 +7,7 @@ from six import BytesIO
 
 from swagger_server.models.data import Data  # noqa: E501
 from swagger_server.test import BaseTestCase
+from swagger_server.util import get_collection
 
 
 class TestDataController(BaseTestCase):
@@ -17,20 +18,12 @@ class TestDataController(BaseTestCase):
 
         Get data of a plant
         """
-        query_string = [('sensor', 'sensor_example'),
-                        ('min_value', 56),
-                        ('max_value', 56),
-                        ('min_time', 789),
-                        ('max_time', 789)]
-        response = self.client.open(
-            '/plants/{plant_id}/data'.format(plant_id=789),
-            method='GET',
-            content_type='application/json',
-            query_string=query_string)
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+        pass
 
 
 if __name__ == '__main__':
     import unittest
+    get_collection('plants').delete_many({})
+    get_collection('events').delete_many({})
+    get_collection('data').delete_many({})
     unittest.main()
