@@ -5,6 +5,7 @@ install:
 - pip install pip-tools
 - pip install -r requirements.txt
 - pip install pytest pytest-cov coveralls
+- pip install --upgrade pytest
 - redis-server &
 - celery -A swagger_server.controllers.sink_controller.celery worker &
 script:
