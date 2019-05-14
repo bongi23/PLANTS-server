@@ -7,3 +7,4 @@ celery
 redis
 pytest
 pytest-cov
+flask_testing
