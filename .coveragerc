@@ -7,8 +7,9 @@ omit =
     # Don't test the tests
     */tests/*
     */models/*
-    encoder.py
-    util.py
+    *encoder.py*
+    *util.py*
+    *__main.py__*
 
 
 [report]
