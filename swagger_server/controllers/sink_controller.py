@@ -67,7 +67,7 @@ def set_values(plant_id, data=None):  # noqa: E501
         data = connexion.request.get_json()  # noqa: E501
         data_coll = util.get_collection('data')
         data_coll.insert_one(data)
-
+        del data['_id']
         check_event.delay(data)
     return 'Success'
 
