@@ -72,13 +72,13 @@ def set_values(plant_id, data=None):  # noqa: E501
     return 'Success'
 
 
-@celery.task()
-def notify(address):
+@celery.task()  # pragma: no cover
+def notify(address):  # pragma no cover
     pass
 
 
-@celery.task()
-def check_event(data):  # pragma: no    cover
+@celery.task()  # pragma: no cover
+def check_event(data):  # pragma: no cover
     events = util.get_collection('events').find({'microbit': data['microbit']})
     match_value = False
 
