@@ -6,6 +6,9 @@ branch = True
 omit =
     # Don't test the tests
     */tests/*
+    */models/*
+    encoder.py
+    util.py
 
 
 [report]

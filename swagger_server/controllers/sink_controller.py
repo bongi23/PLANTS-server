@@ -78,7 +78,7 @@ def notify(address):
 
 
 @celery.task()
-def check_event(data):
+def check_event(data):  # pragma: no cover
     events = util.get_collection('events').find({'microbit': data['microbit']})
     match_value = False
 
