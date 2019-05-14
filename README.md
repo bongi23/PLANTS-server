@@ -12,6 +12,17 @@ To run the server, please execute the following from the root directory:
 
 ```
 pip3 install -r requirements.txt
+```
+
+In  different terminals run respectively the following 2 commands:
+```
+redis-server
+
+celery -A swagger_server.controllers.sink_controller.celery worker
+```
+
+And now in a third terminal run
+```
 python3 -m swagger_server
 ```
 

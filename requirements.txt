@@ -4,3 +4,5 @@ setuptools >= 21.0.0
 flask_pymongo
 flask
 flask_testing
+celery
+redis

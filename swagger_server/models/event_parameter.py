@@ -15,101 +15,179 @@ class EventParameter(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, sensor: str=None, threshold: List[int]=None, frequency: int=None):  # noqa: E501
-        """EventParameter - a model defined in Swagger
+    def __init__(self, sensor: str=None, min_value: int=None, max_value: int=None, min_time: int=None, max_time: int=None, frequency: int=None):  # noqa: E501
+        """EventParam - a model defined in Swagger
 
-        :param sensor: The sensor of this EventParameter.  # noqa: E501
+        :param sensor: The sensor of this EventParam.  # noqa: E501
         :type sensor: str
-        :param threshold: The threshold of this EventParameter.  # noqa: E501
-        :type threshold: List[int]
-        :param frequency: The frequency of this EventParameter.  # noqa: E501
+        :param min_value: The min_value of this EventParam.  # noqa: E501
+        :type min_value: int
+        :param max_value: The max_value of this EventParam.  # noqa: E501
+        :type max_value: int
+        :param min_time: The min_time of this EventParam.  # noqa: E501
+        :type min_time: int
+        :param max_time: The max_time of this EventParam.  # noqa: E501
+        :type max_time: int
+        :param frequency: The frequency of this EventParam.  # noqa: E501
         :type frequency: int
         """
         self.swagger_types = {
             'sensor': str,
-            'threshold': List[int],
+            'min_value': int,
+            'max_value': int,
+            'min_time': int,
+            'max_time': int,
             'frequency': int
         }
 
         self.attribute_map = {
             'sensor': 'sensor',
-            'threshold': 'threshold',
+            'min_value': 'min_value',
+            'max_value': 'max_value',
+            'min_time': 'min_time',
+            'max_time': 'max_time',
             'frequency': 'frequency'
         }
 
         self._sensor = sensor
-        self._threshold = threshold
+        self._min_value = min_value
+        self._max_value = max_value
+        self._min_time = min_time
+        self._max_time = max_time
         self._frequency = frequency
 
     @classmethod
-    def from_dict(cls, dikt) -> 'EventParameter':
+    def from_dict(cls, dikt) -> 'EventParam':
         """Returns the dict as a model
 
         :param dikt: A dict.
         :type: dict
-        :return: The event parameter of this EventParameter.  # noqa: E501
-        :rtype: EventParameter
+        :return: The event_param of this EventParam.  # noqa: E501
+        :rtype: EventParam
         """
         return util.deserialize_model(dikt, cls)
 
     @property
     def sensor(self) -> str:
-        """Gets the sensor of this EventParameter.
+        """Gets the sensor of this EventParam.
 
 
-        :return: The sensor of this EventParameter.
+        :return: The sensor of this EventParam.
         :rtype: str
         """
         return self._sensor
 
     @sensor.setter
     def sensor(self, sensor: str):
-        """Sets the sensor of this EventParameter.
+        """Sets the sensor of this EventParam.
 
 
-        :param sensor: The sensor of this EventParameter.
+        :param sensor: The sensor of this EventParam.
         :type sensor: str
         """
 
         self._sensor = sensor
 
     @property
-    def threshold(self) -> List[int]:
-        """Gets the threshold of this EventParameter.
+    def min_value(self) -> int:
+        """Gets the min_value of this EventParam.
 
 
-        :return: The threshold of this EventParameter.
-        :rtype: List[int]
+        :return: The min_value of this EventParam.
+        :rtype: int
         """
-        return self._threshold
+        return self._min_value
 
-    @threshold.setter
-    def threshold(self, threshold: List[int]):
-        """Sets the threshold of this EventParameter.
+    @min_value.setter
+    def min_value(self, min_value: int):
+        """Sets the min_value of this EventParam.
 
 
-        :param threshold: The threshold of this EventParameter.
-        :type threshold: List[int]
+        :param min_value: The min_value of this EventParam.
+        :type min_value: int
         """
 
-        self._threshold = threshold
+        self._min_value = min_value
+
+    @property
+    def max_value(self) -> int:
+        """Gets the max_value of this EventParam.
+
+
+        :return: The max_value of this EventParam.
+        :rtype: int
+        """
+        return self._max_value
+
+    @max_value.setter
+    def max_value(self, max_value: int):
+        """Sets the max_value of this EventParam.
+
+
+        :param max_value: The max_value of this EventParam.
+        :type max_value: int
+        """
+
+        self._max_value = max_value
+
+    @property
+    def min_time(self) -> int:
+        """Gets the min_time of this EventParam.
+
+
+        :return: The min_time of this EventParam.
+        :rtype: int
+        """
+        return self._min_time
+
+    @min_time.setter
+    def min_time(self, min_time: int):
+        """Sets the min_time of this EventParam.
+
+
+        :param min_time: The min_time of this EventParam.
+        :type min_time: int
+        """
+
+        self._min_time = min_time
+
+    @property
+    def max_time(self) -> int:
+        """Gets the max_time of this EventParam.
+
+
+        :return: The max_time of this EventParam.
+        :rtype: int
+        """
+        return self._max_time
+
+    @max_time.setter
+    def max_time(self, max_time: int):
+        """Sets the max_time of this EventParam.
+
+
+        :param max_time: The max_time of this EventParam.
+        :type max_time: int
+        """
+
+        self._max_time = max_time
 
     @property
     def frequency(self) -> int:
-        """Gets the frequency of this EventParameter.
+        """Gets the frequency of this EventParam.
 
 
-        :return: The frequency of this EventParameter.
+        :return: The frequency of this EventParam.
         :rtype: int
         """
         return self._frequency
 
     @frequency.setter
     def frequency(self, frequency: int):
-        """Sets the frequency of this EventParameter.
+        """Sets the frequency of this EventParam.
 
 
-        :param frequency: The frequency of this EventParameter.
+        :param frequency: The frequency of this EventParam.
         :type frequency: int
         """
 
