@@ -274,8 +274,7 @@ definitions:
         type: "integer"
         format: "int64"
       timestamp:
-        type: "integer"
-        format: "int64"
+        type: "number"
     example:
       sensor: "sensor"
       value: 0
