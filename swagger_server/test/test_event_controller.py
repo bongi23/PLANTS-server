@@ -17,7 +17,8 @@ class TestEventController(BaseTestCase):
         Register to sensors' event
         """
         id = 423569
-        plant = {'microbit': id, 'description': 'a plant', 'network': 1}
+        plant = {'microbit': id, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+                 'connected': True}
 
         response = self.client.open(
             '/sink',
@@ -28,7 +29,6 @@ class TestEventController(BaseTestCase):
 
         event = {
             "data": {
-                "frequency": 0,
                 "max_value": 0,
                 "min_value": 0,
                 "sensor": "string"
@@ -70,7 +70,8 @@ class TestEventController(BaseTestCase):
         Unregister to sensors' event
         """
         id = 423569
-        plant = {'microbit': id, 'description': 'a plant', 'network': 1}
+        plant = {'microbit': id, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+                 'connected': True}
 
         response = self.client.open(
             '/sink',

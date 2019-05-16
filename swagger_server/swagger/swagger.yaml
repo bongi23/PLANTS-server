@@ -102,13 +102,11 @@ paths:
       - name: "min_time"
         in: "query"
         required: false
-        type: "integer"
-        format: "int64"
+        type: "number"
       - name: "max_time"
         in: "query"
         required: false
-        type: "integer"
-        format: "int64"
+        type: "number"
       responses:
         200:
           description: "Ok"
@@ -199,8 +197,6 @@ paths:
           description: "Ok"
         400:
           description: "Missing infomation"
-        409:
-          description: "The plant already exists"
       x-swagger-router-controller: "swagger_server.controllers.sink_controller"
   /sink/{plant_id}:
     post:
@@ -252,11 +248,13 @@ definitions:
       sensor:
         type: "string"
       min_value:
-        type: "integer"
+        type: "number"
       max_value:
-        type: "integer"
-      frequency:
-        type: integer
+        type: "number"
+    example:
+      sensor: "thermometer"
+      min_value: 20
+      max_value: 35
   data:
     type: "object"
     required:
@@ -271,11 +269,11 @@ definitions:
       sensor:
         type: "string"
       value:
-        type: "integer"
-        format: "int64"
+        type: "number"
       timestamp:
         type: "number"
     example:
+      microbit: 0
       sensor: "sensor"
       value: 0
       timestamp: 6
@@ -284,6 +282,9 @@ definitions:
     required:
       - "microbit"
       - "network"
+      - "connected"
+      - "sink"
+      - "sensors"
     properties:
       microbit:
         type: "integer"
@@ -293,13 +294,22 @@ definitions:
         format: "int64"
       description:
         type: "string"
+      connected:
+        type:
+          boolean
+      sink:
+        type:
+          boolean
+      sensors:
+        type:
+          array
+        items:
+          type:
+            string
     example:
       microbit: 0
       description: "description"
       network: 6
-  inline_response_200:
-    properties:
-      event_id:
-        type: "string"
-    example:
-      event_id: "event_id"
+      connected: true
+      sink: false
+      sensors: ["thermometer", "moisture"]

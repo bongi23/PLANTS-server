@@ -31,6 +31,9 @@ def subscribe(plant_id, event):  # noqa: E501
         events = util.get_collection('events')
         event_id = events.insert_one(event)
 
+        # TODO
+        # inviare i dati relativi all'evento al sink
+
     return {'event_id': str(event_id.inserted_id)}
 
 

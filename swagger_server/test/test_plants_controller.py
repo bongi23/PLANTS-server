@@ -14,7 +14,8 @@ class TestPlantsController(BaseTestCase):
 
         Get info about a plant
         """
-        plant = {'microbit': 423569, 'description': 'a plant', 'network': 1}
+        plant = {'microbit': 10, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+                 'connected': True}
 
         response = self.client.open(
             '/sink',
@@ -24,16 +25,16 @@ class TestPlantsController(BaseTestCase):
         self.assert200(response)
 
         response = self.client.open(
-            '/plants/{plant_id}'.format(plant_id=423569),
+            '/plants/{plant_id}'.format(plant_id=10),
             method='GET',
             content_type='application/json')
         self.assert200(response)
         self.assertDictEqual(plant, response.json)
 
-        get_collection('plants').delete_one({'microbit': 423569})
+        get_collection('plants').delete_one({'microbit': 10})
 
         response = self.client.open(
-            '/plants/{plant_id}'.format(plant_id=423569),
+            '/plants/{plant_id}'.format(plant_id=11),
             method='GET',
             content_type='application/json')
         self.assert404(response)
@@ -47,7 +48,8 @@ class TestPlantsController(BaseTestCase):
         plants = []
 
         for i in range(5):
-            plant = {'microbit': i, 'description': 'a plant', 'network': 1}
+            plant = {'microbit': i, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+                     'connected': True}
             plants.append(plant)
 
             response = self.client.open(

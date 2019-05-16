@@ -1,5 +1,6 @@
 from swagger_server import util
 from flask import abort
+import pymongo
 
 
 def get_data(plant_id, sensor=None, min_value=None, max_value=None, min_time=None, max_time=None):  # noqa: E501
@@ -61,8 +62,7 @@ def get_data(plant_id, sensor=None, min_value=None, max_value=None, min_time=Non
 
     data = util.get_collection('data')
     res = []
-    print(query)
-    for d in data.find(query).limit(10):
+    for d in data.find(query).limit(10).sort('timestamp', pymongo.DESCENDING):
         del d['_id']
         res.append(d)
     return res

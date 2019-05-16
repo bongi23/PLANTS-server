@@ -37,4 +37,8 @@ def get_plants():  # noqa: E501
     return res"""
 
     all_plants = util.get_collection('plants').find({})
-    return [Plant.to_dict(Plant.from_dict(p)) for p in all_plants]
+    res = []
+    for p in all_plants:
+        del p['_id']
+        res.append(p)
+    return res

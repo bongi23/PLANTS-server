@@ -19,7 +19,8 @@ class TestDataController(BaseTestCase):
 
         Get data of a plant
         """
-        plant = {'microbit': 10, 'description': 'a plant', 'network': 1}
+        plant = {'microbit': 10, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+                 'connected': True}
 
         response = self.client.open(
             '/sink',
@@ -39,12 +40,8 @@ class TestDataController(BaseTestCase):
         after = time()
 
         for d in data:
-            response = self.client.open(
-                '/sink/{plant_id}'.format(plant_id=10),
-                method='POST',
-                data=json.dumps(d),
-                content_type='application/json')
-            self.assert200(response)
+            get_collection('data').insert(d)
+            del d['_id']
 
         query_string = [('sensor', 'thermometer'),
                         ('min_value', 20),
@@ -55,9 +52,28 @@ class TestDataController(BaseTestCase):
             method='GET',
             query_string=query_string)
         self.assert200(response)
-        print(data)
-        print(response.json)
-        self.assertListEqual(data, response.json)
+        for d in data:
+            self.assertIn(d, response.json)
+
+        query_string = [('sensor', 'thermometer'),
+                        ('min_time', before),
+                        ('max_time', after)]
+
+        response = self.client.open(
+            '/plants/{plant_id}/data'.format(plant_id=10),
+            method='GET',
+            query_string=query_string)
+        self.assert200(response)
+        for d in data:
+            self.assertIn(d, response.json)
+
+        response = self.client.open(
+            '/plants/{plant_id}/data'.format(plant_id=10),
+            method='GET',
+            query_string=[])
+        self.assert200(response)
+        for d in data:
+            self.assertIn(d, response.json)
 
         get_collection('plants').delete_one({'microbit': 10})
         get_collection('data').delete_many({'microbit': 10})
