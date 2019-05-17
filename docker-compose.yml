@@ -1,0 +1,37 @@
+version: '3'
+services:
+
+  redis:
+    image: redis
+    networks:
+      main:
+        aliases:
+          - redis
+
+  mongoDB:
+    image: mongo:latest
+    networks:
+      main:
+        aliases:
+          - mongo
+
+  apigateway:
+    depends_on:
+      - redis
+    build:
+      context: git://github.com/bongi23/PLANTS-server.git
+    ports:
+      - "5000:5000"
+    environment:
+      - "REDIS=redis"
+      - "MONGODB=mongo"
+    volumes:
+      - "api-gatewaydb:/tmp/"
+    networks:
+      main:
+
+volumes:
+  api-gatewaydb:
+
+networks:
+  main:

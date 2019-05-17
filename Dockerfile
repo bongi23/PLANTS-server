@@ -6,7 +6,6 @@ WORKDIR /usr/src/app
 COPY requirements.txt /usr/src/app/
 
 RUN pip3 install --no-cache-dir -r requirements.txt \
-    redis-server & \
     celery -A swagger_server.controllers.sink_controller.celery worker &
 
 COPY . /usr/src/app
