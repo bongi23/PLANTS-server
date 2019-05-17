@@ -3,10 +3,6 @@
 from __future__ import absolute_import
 
 from flask import json
-from six import BytesIO
-
-from swagger_server.models.data import Data  # noqa: E501
-from swagger_server.models.plant import Plant  # noqa: E501
 from swagger_server.test import BaseTestCase
 from swagger_server.util import get_collection
 

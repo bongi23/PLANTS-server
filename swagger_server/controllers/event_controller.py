@@ -1,6 +1,5 @@
 import connexion
 
-from swagger_server.models.inline_response200 import InlineResponse200  # noqa: E501
 from swagger_server import util
 from flask import abort
 from flask_pymongo import ObjectId

@@ -1,7 +1,3 @@
-import connexion
-import six
-
-from swagger_server.models.plant import Plant  # noqa: E501
 from swagger_server import util
 from flask import abort
 
