@@ -38,6 +38,9 @@ def add_plant(plant):  # noqa: E501
     if connexion.request.is_json:
         plant = connexion.request.get_json()  # noqa: E501
 
+    print(connexion.request.remote_addr)
+
+    plant['network'] = connexion.request.remote_addr
     plants = util.get_collection('plants')
     if plants.find_one({'microbit': plant['microbit']}) is not None:
         plants.update_one({'microbit': plant['microbit']}, {"$set": plant})
