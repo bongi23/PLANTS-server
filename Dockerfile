@@ -1,16 +1,12 @@
-FROM python:3-alpine
-
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
-COPY requirements.txt /usr/src/app/
-
-RUN pip3 install --no-cache-dir -r requirements.txt \
-    celery -A swagger_server.controllers.sink_controller.celery worker &
-
-COPY . /usr/src/app
+FROM python:3.6-alpine
 
 EXPOSE 8080
+ADD requirements.txt ./app/
+WORKDIR /app
+
+RUN pip install -r requirements.txt
+
+ADD . /app
 
 ENTRYPOINT ["python3"]
 

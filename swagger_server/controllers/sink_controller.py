@@ -2,13 +2,16 @@ import connexion
 from swagger_server import util
 from flask import abort
 from celery import Celery
+import os
+
+REDIS = os.environ['REDIS']
 
 
 def make_celery():
     celery = Celery(
         __name__,
-        backend='redis://localhost:6379',
-        broker='redis://localhost:6379'
+        backend=REDIS,
+        broker=REDIS
     )
 
     class ContextTask(celery.Task):
