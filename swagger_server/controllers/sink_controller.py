@@ -4,7 +4,7 @@ from flask import abort
 from celery import Celery
 import os
 
-REDIS = os.environ['REDIS']
+"""REDIS = os.environ['REDIS']
 
 
 def make_celery():
@@ -23,7 +23,7 @@ def make_celery():
 
 
 celery = make_celery()
-
+"""
 
 def add_plant(plant):  # noqa: E501
     """Create a new plant
@@ -78,10 +78,10 @@ def set_values(plant_id, data=None):  # noqa: E501
             del e['_id']
             events.append(e)
 
-        check_event.delay(data, events)
+        #check_event.delay(data, events)
     return 'Success'
 
-
+"""
 @celery.task()  # pragma: no cover
 def notify(address):  # pragma no cover
     print('notify')
@@ -114,4 +114,4 @@ def check_event(data, events):  # pragma: no cover
 
                 if match_value:
                     notify.delay(e['return_address'], data)
-
+"""""
