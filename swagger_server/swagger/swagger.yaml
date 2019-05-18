@@ -281,7 +281,6 @@ definitions:
     type: "object"
     required:
       - "microbit"
-      - "network"
       - "connected"
       - "sink"
       - "sensors"

@@ -23,8 +23,8 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - "REDIS=redis"
-      - "MONGODB=mongo"
+      - "REDIS=redis://redis"
+      - "MONGODB=mongodb://mongo"
     networks:
       main:
 
