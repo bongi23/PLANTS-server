@@ -15,7 +15,7 @@ def get_db():
     again.
     """
     if 'mongo_db' not in g:
-        g.mongo_db = PyMongo(app=current_app, uri='mongodb://localhost:27017/plantsDB').db
+        g.mongo_db = PyMongo(app=current_app, uri='mongodb://mongo:27017/plantsDB').db
 
     return g.mongo_db
 
