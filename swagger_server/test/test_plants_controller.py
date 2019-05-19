@@ -14,7 +14,7 @@ class TestPlantsController(BaseTestCase):
 
         Get info about a plant
         """
-        plant = {'microbit': 10, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+        plant = {'microbit': 10, 'description': 'a plant', 'network': '127.0.0.1', 'sensors': ['thermo'], 'sink': True,
                  'connected': True}
 
         response = self.client.open(
@@ -48,7 +48,7 @@ class TestPlantsController(BaseTestCase):
         plants = []
 
         for i in range(5):
-            plant = {'microbit': i, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+            plant = {'microbit': i, 'description': 'a plant', 'network': '127.0.0.1', 'sensors': ['thermo'], 'sink': True,
                      'connected': True}
             plants.append(plant)
 

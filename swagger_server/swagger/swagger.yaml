@@ -289,8 +289,7 @@ definitions:
         type: "integer"
         format: "int64"
       network:
-        type: "integer"
-        format: "int64"
+        type: "string"
       description:
         type: "string"
       connected:

@@ -6,7 +6,7 @@ from flask import current_app, g
 from flask_pymongo import PyMongo
 import os
 
-#MONGODB = os.environ['MONGODB']
+MONGODB = os.environ['MONGODB']
 
 
 def get_db():
@@ -15,7 +15,7 @@ def get_db():
     again.
     """
     if 'mongo_db' not in g:
-        g.mongo_db = PyMongo(app=current_app, uri='mongodb://mongo:27017/plantsDB').db
+        g.mongo_db = PyMongo(app=current_app, uri=MONGODB).db
 
     return g.mongo_db
 
