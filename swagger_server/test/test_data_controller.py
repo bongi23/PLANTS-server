@@ -17,7 +17,7 @@ class TestDataController(BaseTestCase):
 
         Get data of a plant
         """
-        plant = {'microbit': 10, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+        plant = {'microbit': 10, 'description': 'a plant', 'sensors': ['thermo'], 'sink': True,
                  'connected': True}
 
         response = self.client.open(

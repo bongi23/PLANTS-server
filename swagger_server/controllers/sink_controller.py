@@ -4,7 +4,7 @@ from flask import abort
 from celery import Celery
 import os
 
-"""REDIS = os.environ['REDIS']
+REDIS = os.environ['REDIS']
 
 
 def make_celery():
@@ -23,7 +23,7 @@ def make_celery():
 
 
 celery = make_celery()
-"""
+
 
 def add_plant(plant):  # noqa: E501
     """Create a new plant
@@ -37,10 +37,8 @@ def add_plant(plant):  # noqa: E501
     """
     if connexion.request.is_json:
         plant = connexion.request.get_json()  # noqa: E501
-
-    print(connexion.request.remote_addr)
-
     plant['network'] = connexion.request.remote_addr
+
     plants = util.get_collection('plants')
     if plants.find_one({'microbit': plant['microbit']}) is not None:
         plants.update_one({'microbit': plant['microbit']}, {"$set": plant})
@@ -81,10 +79,10 @@ def set_values(plant_id, data=None):  # noqa: E501
             del e['_id']
             events.append(e)
 
-        #check_event.delay(data, events)
+        check_event.delay(data, events)
     return 'Success'
 
-"""
+
 @celery.task()  # pragma: no cover
 def notify(address):  # pragma no cover
     print('notify')
@@ -93,7 +91,6 @@ def notify(address):  # pragma no cover
 
 @celery.task()  # pragma: no cover
 def check_event(data, events):  # pragma: no cover
-        print("ciao")
         match_value = False
 
         for e in events:
@@ -117,4 +114,3 @@ def check_event(data, events):  # pragma: no cover
 
                 if match_value:
                     notify.delay(e['return_address'], data)
-"""""

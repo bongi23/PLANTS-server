@@ -15,7 +15,7 @@ class TestSinkController(BaseTestCase):
 
         Create a new plant
         """
-        plant = {'microbit': 10, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+        plant = {'microbit': 10, 'description': 'a plant', 'network': '127.0.0.1', 'sensors': ['thermo'], 'sink': True,
                  'connected': True}
 
         response = self.client.open(
@@ -26,7 +26,7 @@ class TestSinkController(BaseTestCase):
         self.assert200(response)
 
         # inserting plant with same id
-        plant = {'microbit': 10, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+        plant = {'microbit': 10, 'description': 'a plant', 'network': '127.0.0.1', 'sensors': ['thermo'], 'sink': True,
                  'connected': True}
 
         response = self.client.open(
@@ -44,7 +44,7 @@ class TestSinkController(BaseTestCase):
         Set the sensed values
         """
         # insert plant
-        plant = {'microbit': 10, 'description': 'a plant', 'network': 1, 'sensors': ['thermo'], 'sink': True,
+        plant = {'microbit': 10, 'description': 'a plant', 'network': '127.0.0.1', 'sensors': ['thermo'], 'sink': True,
                  'connected': True}
 
         response = self.client.open(
