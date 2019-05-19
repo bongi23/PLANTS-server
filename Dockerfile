@@ -8,6 +8,6 @@ RUN pip install -r requirements.txt
 
 ADD . /app
 
-CMD celery -A swagger_server.controllers.sink_controller.celery worker &
+CMD celery -A swagger_server.controllers.sink_controller.celery worker
 
 CMD python -m swagger_server
