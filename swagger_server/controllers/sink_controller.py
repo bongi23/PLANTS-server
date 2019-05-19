@@ -91,7 +91,6 @@ def notify(address):  # pragma no cover
 
 @celery.task()  # pragma: no cover
 def check_event(data, events):  # pragma: no cover
-        print('aaaaaaaaaaaaaaaaaaaaaaaaa')
         match_value = False
 
         for e in events:
