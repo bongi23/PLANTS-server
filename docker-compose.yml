@@ -18,8 +18,10 @@ services:
   apigateway:
     depends_on:
       - redis
+      - mongoDB
     build:
       context: git://github.com/bongi23/PLANTS-server.git
+      dockerfile: Dockerfile-server
     ports:
       - "8080:8080"
     environment:
@@ -27,6 +29,21 @@ services:
       - "MONGODB=mongodb://mongo:27017/plantsDB"
     networks:
       main:
+
+  celery:
+    depends_on:
+      - redis
+      - mongoDB
+      - apigateway
+    build:
+      context: git://github.com/bongi23/PLANTS-server.git
+      dockerfile: Dockerfile-celery
+    environment:
+      - "REDIS=redis://redis"
+      - "MONGODB=mongodb://mongo27017/plantsDB"
+    networks:
+      main:
+
 
 networks:
   main:
