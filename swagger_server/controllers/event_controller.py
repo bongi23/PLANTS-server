@@ -2,7 +2,9 @@ import connexion
 
 from swagger_server import util
 from flask import abort
-from flask_pymongo import ObjectId
+import requests
+
+event_counter = 0
 
 
 def subscribe(plant_id, event):  # noqa: E501
@@ -27,13 +29,18 @@ def subscribe(plant_id, event):  # noqa: E501
 
         if plant is None:
             abort(404)
+
+        global event_counter
+        event_counter += 1
+
         events = util.get_collection('events')
-        event_id = events.insert_one(event)
+        event['id'] = event_counter
+        events.insert_one(event)
 
-        # TODO
-        # inviare i dati relativi all'evento al sink
+        resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(plant_id, event_counter), params=event['data'])
+        print(resp.url)
 
-    return {'event_id': str(event_id.inserted_id)}
+    return {'event_id': event_counter}
 
 
 def unsubscribe(event_id):  # noqa: E501
@@ -47,10 +54,17 @@ def unsubscribe(event_id):  # noqa: E501
     :rtype: None
     """
     events = util.get_collection('events')
+    plants = util.get_collection('plants')
 
-    if(events.find_one({'_id': ObjectId(event_id)})) is None:
+    evt = events.find_one({'id': event_id})
+    if evt is None:
         abort(404)
 
-    events.delete_one({'_id': ObjectId(event_id)})
+    plant = plants.find_one({'microbit': evt['microbit']})
+    resp = requests.delete(plant['network']+'/sensing/{0}/{1}'.format(plant['microbit'], event_counter))
+
+    print(resp)
+
+    events.delete_one({'id': event_id})
 
     return 'Success'
