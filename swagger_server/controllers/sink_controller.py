@@ -37,7 +37,7 @@ def add_plant(plant):  # noqa: E501
     """
     if connexion.request.is_json:
         plant = connexion.request.get_json()  # noqa: E501
-    plant['network'] = connexion.request.remote_addr
+    plant['network'] = 'http://'+connexion.request.remote_addr+':8080'
 
     plants = util.get_collection('plants')
     if plants.find_one({'microbit': plant['microbit']}) is not None:
