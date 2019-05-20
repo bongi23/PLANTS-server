@@ -39,7 +39,7 @@ def subscribe(plant_id, event):  # noqa: E501
         events.insert_one(event)
 
         resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(plant_id, event_counter), params=event['data'])
-        print(resp.url)
+        print(resp.status_code)
 
     return {'event_id': event_counter}
 
