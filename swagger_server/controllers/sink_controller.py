@@ -2,16 +2,17 @@ import connexion
 from swagger_server import util
 from flask import abort
 from celery import Celery
+import requests
 import os
 
-#REDIS = os.environ['REDIS']
+REDIS = os.environ['REDIS']
 
 
 def make_celery():
     celery = Celery(
         __name__,
-        backend='redis://localhost:6379',
-        broker='redis://localhost:6379'
+        backend=REDIS,
+        broker=REDIS
     )
 
     class ContextTask(celery.Task):
@@ -79,14 +80,14 @@ def set_values(plant_id, data=None):  # noqa: E501
             del e['_id']
             events.append(e)
 
-        check_event.delay(data, events)
+        if len(events) != 0:
+            check_event.delay(data, events)
     return 'Success'
 
 
 @celery.task()  # pragma: no cover
-def notify(address):  # pragma no cover
-    print('notify')
-    pass
+def notify(address, data):  # pragma no cover
+    requests.put(address, data=data, headers={'Content-Type': 'application/json'})
 
 
 @celery.task()  # pragma: no cover

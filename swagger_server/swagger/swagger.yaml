@@ -7,7 +7,7 @@ info:
   license:
     name: "AGPL-v3.0"
     url: "https://www.gnu.org/licenses/agpl-3.0.en.html"
-host: "10.101.49.39:8080"
+host: "localhost:8080"
 tags:
 - name: "plants"
   description: "Operations about plants"
@@ -176,6 +176,38 @@ paths:
         404:
           description: "The plant or the event don't exist"
       x-swagger-router-controller: "swagger_server.controllers.event_controller"
+  /plants/sensing/{microbit_id}/{sensor_name}:
+    put:
+      tags:
+        - "plants"
+      summary: "update sensing time of a sensor of a microbit_it"
+      description: "This can be done by 3rd party app"
+      operationId: "update_sensing_time"
+      parameters:
+        - name: "microbit_id"
+          in: "path"
+          required: true
+          type: "integer"
+          format: int64
+        - name: "sensor_name"
+          in: path
+          type: string
+          required: true
+        - name: "sensing_time"
+          in: query
+          type: integer
+          format: int32
+          required: true
+      responses:
+        200:
+          description: "Ok"
+        400:
+          description: "Missing infomation"
+        404:
+          description: "The plant didn't exist"
+        410:
+          description: "Plant is not online"
+      x-swagger-router-controller: "swagger_server.controllers.plants_controller"
   /sink:
     put:
       tags:
