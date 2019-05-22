@@ -43,14 +43,14 @@ def get_plants():  # noqa: E501
 
 def update_sensing_time(microbit_id, sensor_name, sensing_time):
 
-    plant = util.get_collection('plants').find_one({'microbit':microbit_id})
+    plant = util.get_collection('plants').find_one({'microbit': microbit_id})
 
     if plant is None:
         abort(404)
 
     sink_address = plant['network']
 
-    resp = requests.put(sink_address+'/sensing/{microbit_id}/{sensor_name}/time'.format(microbit_id, sensor_name),
+    resp = requests.put(sink_address + '/sensing/{0}/{1}/time'.format(plant['microbit'], sensor_name),
                         params={'sampling_rate': sensing_time})
 
     return resp.status_code
