@@ -37,6 +37,7 @@ class TestEventController(BaseTestCase):
             "return_address": "string"
         }
 
+
         response = self.client.open(
             '/plants/{plant_id}/event'.format(plant_id=id),
             method='PUT',

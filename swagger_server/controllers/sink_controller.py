@@ -4,6 +4,7 @@ from flask import abort
 from celery import Celery
 import requests
 import os
+from swagger_server.controllers.sensors_controller import put_sensors
 
 REDIS = os.environ['REDIS']
 
@@ -41,11 +42,14 @@ def add_plant(plant):  # noqa: E501
         plant['network'] = 'http://'+connexion.request.remote_addr+':8081'
 
     plants = util.get_collection('plants')
+
     if plants.find_one({'microbit': plant['microbit']}) is not None:
         plants.update_one({'microbit': plant['microbit']}, {"$set": plant})
+        put_sensors(plant['microbit'], plant['sensors'])
         return 'Success'
 
     plants.insert_one(plant)
+    put_sensors(plant['microbit'], plant['sensors'])
 
     return 'Success'
 

@@ -9,27 +9,29 @@ info:
     url: "https://www.gnu.org/licenses/agpl-3.0.en.html"
 host: "localhost:8080"
 tags:
-- name: "plants"
-  description: "Operations about plants"
-- name: "data"
-  description: "Operations about sensed data"
-- name: "event"
-  description: "Subscription and unsubscription to event from sensors"
-- name: "sink"
-  description: "Operations about plants"
+  - name: "plants"
+    description: "Operations about plants"
+  - name: "data"
+    description: "Operations about sensed data"
+  - name: "event"
+    description: "Subscription and unsubscription to event from sensors"
+  - name: "sink"
+    description: "Operations about plants"
+  - name: "sensor"
+    description: "Operation about sensors"
 schemes:
-- "https"
-- "http"
+  - "https"
+  - "http"
 paths:
   /plants:
     get:
       tags:
-      - "plants"
+        - "plants"
       summary: "Get all the known plants"
       description: "This can be done by 3rd party app"
       operationId: "get_plants"
       produces:
-      - "application/json"
+        - "application/json"
       parameters: []
       responses:
         200:
@@ -44,21 +46,21 @@ paths:
   /plants/{plant_id}:
     get:
       tags:
-      - "plants"
+        - "plants"
       summary: "Get info about a plant"
       description: "This can be done by 3rd party app"
       operationId: "get_plant"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "plant_id"
-        in: "path"
-        description: "id of a plant"
-        required: true
-        type: "integer"
-        format: "int64"
+        - name: "plant_id"
+          in: "path"
+          description: "id of a plant"
+          required: true
+          type: "integer"
+          format: "int64"
       responses:
         200:
           description: "Ok"
@@ -72,41 +74,41 @@ paths:
   /plants/{plant_id}/data:
     get:
       tags:
-      - "data"
+        - "data"
       summary: "Get data of a plant"
       description: "This can be done by 3rd party app"
       operationId: "get_data"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "plant_id"
-        in: "path"
-        description: "id of a plant"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "sensor"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "min_value"
-        in: "query"
-        required: false
-        type: "integer"
-      - name: "max_value"
-        in: "query"
-        required: false
-        type: "integer"
-      - name: "min_time"
-        in: "query"
-        required: false
-        type: "number"
-      - name: "max_time"
-        in: "query"
-        required: false
-        type: "number"
+        - name: "plant_id"
+          in: "path"
+          description: "id of a plant"
+          required: true
+          type: "integer"
+          format: "int64"
+        - name: "sensor"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "min_value"
+          in: "query"
+          required: false
+          type: "integer"
+        - name: "max_value"
+          in: "query"
+          required: false
+          type: "integer"
+        - name: "min_time"
+          in: "query"
+          required: false
+          type: "number"
+        - name: "max_time"
+          in: "query"
+          required: false
+          type: "number"
       responses:
         200:
           description: "Ok"
@@ -119,7 +121,7 @@ paths:
         404:
           description: "The plant does not exists"
       x-swagger-router-controller: "swagger_server.controllers.data_controller"
-  /plants/{plant_id}/event:
+  /plants/{microbit_id}/event:
     put:
       tags:
         - "event"
@@ -131,9 +133,9 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "plant_id"
+        - name: "microbit_id"
           in: "path"
-          description: "id of a plant"
+          description: "id of a microbit"
           required: true
           type: "integer"
           format: "int64"
@@ -151,6 +153,38 @@ paths:
             properties:
               event_id:
                 type: "string"
+        400:
+          description: "Missing infomation"
+        404:
+          description: "The plant does not exists"
+      x-swagger-router-controller: "swagger_server.controllers.event_controller"
+    get:
+      tags:
+        - "event"
+      summary: "Register to sensors' event"
+      description: "This can be done by 3rd party app"
+      operationId: "get_event"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "microbit_id"
+          in: "path"
+          description: "id of a plant"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "query"
+          name: "sensor"
+          description: "name of a sensor"
+          type:
+            string
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/event'
         400:
           description: "Missing infomation"
         404:
@@ -179,7 +213,7 @@ paths:
   /plants/sensing/{microbit_id}/{sensor_name}:
     put:
       tags:
-        - "plants"
+        - "sensor"
       summary: "update sensing time of a sensor of a microbit_it"
       description: "This can be done by 3rd party app"
       operationId: "update_sensing_time"
@@ -207,7 +241,35 @@ paths:
           description: "The plant didn't exist"
         410:
           description: "Plant is not online"
-      x-swagger-router-controller: "swagger_server.controllers.plants_controller"
+      x-swagger-router-controller: "swagger_server.controllers.sensors_control"
+  /plants/sensors/{microbit_id}:
+    get:
+      tags:
+        - "sensor"
+      summary: "get all sensors"
+      description: "This can be done by 3rd party app"
+      operationId: "get_sensors"
+      produces:
+        - "application/json"
+      parameters:
+        - name: microbit_id
+          in: path
+          type:
+            integer
+          format: int64
+          required: true
+        - name: sensor
+          in: query
+          type: string
+      responses:
+        200:
+          description: 'Ok'
+          schema:
+            type:
+              array
+            items:
+              $ref: '#/definitions/sensor'
+      x-swagger-router-controller: "swagger_server.controllers.sensors_controller"
   /sink:
     put:
       tags:
@@ -259,6 +321,19 @@ paths:
           description: "The plant doesn't exists"
       x-swagger-router-controller: "swagger_server.controllers.sink_controller"
 definitions:
+  sensor:
+    type: object
+    required:
+      - "microbit"
+      - "sensor"
+    properties:
+      microbit:
+        type: integer
+        format: int64
+      sensor:
+        type: string
+      sampling_rate:
+        type: integer
   event:
     type: "object"
     required:

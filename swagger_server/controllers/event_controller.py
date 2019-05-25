@@ -69,3 +69,20 @@ def unsubscribe(event_id):  # noqa: E501
     events.delete_one({'id': event_id})
 
     return 'Success'
+
+
+def get_event(microbit_id, sensor_name=None):
+
+    events = util.get_collection('events')
+
+    res = []
+    if sensor_name is not None:
+        query = {'$and': [{'microbit': microbit_id}, {'data': {'sensor': sensor_name}}]}
+    else:
+        query = {'microbit': microbit_id}
+
+    for evt in events.find(query):
+        del evt['_id']
+        res.append(evt)
+
+    return res
