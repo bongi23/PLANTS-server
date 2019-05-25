@@ -241,7 +241,7 @@ paths:
           description: "The plant didn't exist"
         410:
           description: "Plant is not online"
-      x-swagger-router-controller: "swagger_server.controllers.sensors_control"
+      x-swagger-router-controller: "swagger_server.controllers.sensors_controller"
   /plants/sensors/{microbit_id}:
     get:
       tags:
