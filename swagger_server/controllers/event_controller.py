@@ -1,8 +1,9 @@
 import connexion
 
 from swagger_server import util
-from flask import abort
+from flask import abort, make_response
 import requests
+
 
 event_counter = 0
 
@@ -38,11 +39,8 @@ def subscribe(microbit_id, event):  # noqa: E501
         event['id'] = event_counter
         events.insert_one(event)
 
-        try:
-            resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(microbit_id, event_counter), params=event['data'])
-        except:
-            pass
-        
+        resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(microbit_id, event_counter), params=event['data'])
+        print(resp)
     return {'event_id': event_counter}
 
 
