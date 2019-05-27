@@ -53,5 +53,5 @@ def put_sensors(plant_id, sensor_list):
                 'microbit': plant_id,
                 'sampling_rate': 0
             })
-
-    sensors_coll.insert_many(sensors)
+    if len(sensors) > 0:
+        sensors_coll.insert_many(sensors)
