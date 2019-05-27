@@ -38,9 +38,11 @@ def subscribe(plant_id, event):  # noqa: E501
         event['id'] = event_counter
         events.insert_one(event)
 
-        resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(plant_id, event_counter), params=event['data'])
-        print(resp.status_code)
-
+        try:
+            resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(plant_id, event_counter), params=event['data'])
+        except:
+            pass
+        
     return {'event_id': event_counter}
 
 
@@ -62,9 +64,10 @@ def unsubscribe(event_id):  # noqa: E501
         abort(404)
 
     plant = plants.find_one({'microbit': evt['microbit']})
-    resp = requests.delete(plant['network']+'/sensing/{0}/{1}'.format(plant['microbit'], event_counter))
-
-    print(resp)
+    try:
+        resp = requests.delete(plant['network']+'/sensing/{0}/{1}'.format(plant['microbit'], event_counter))
+    except:
+        pass
 
     events.delete_one({'id': event_id})
 
