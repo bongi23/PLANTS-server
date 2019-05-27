@@ -12,15 +12,18 @@ def update_sensing_time(microbit_id, sensor_name, sensing_time):
 
     sink_address = plant['network']
 
-    resp = requests.put(sink_address+'/sensing/{0}/{1}/time'.format(microbit_id, sensor_name),
-                        params={'sampling_rate': sensing_time})
+    try:
+        resp_code = requests.put(sink_address+'/sensing/{0}/{1}/time'.format(microbit_id, sensor_name),
+                            params={'sampling_rate': sensing_time}).status_code
+    except:
+        resp_code = 400
 
-    if resp.status_code == 200:
+    if resp_code == 200:
         sensors = util.get_collection('sensors')
         sensors.update_one({'$and': [{'microbit': microbit_id}, {'sensor': sensor_name}]},
                            {'$set': {'sampling_rate': sensing_time}})
 
-    return resp.status_code
+    return resp_code
 
 
 def get_sensors(microbit_id, sensor=None):
