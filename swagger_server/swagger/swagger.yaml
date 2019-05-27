@@ -7,7 +7,7 @@ info:
   license:
     name: "AGPL-v3.0"
     url: "https://www.gnu.org/licenses/agpl-3.0.en.html"
-host: "192.168.50.23:8080"
+host: "localhost:8080"
 tags:
   - name: "plants"
     description: "Operations about plants"
