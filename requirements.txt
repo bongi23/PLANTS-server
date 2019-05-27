@@ -8,4 +8,3 @@ redis
 pytest
 pytest-cov
 flask_testing
-flask-cors
