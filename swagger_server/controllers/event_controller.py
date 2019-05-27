@@ -7,7 +7,7 @@ import requests
 event_counter = 0
 
 
-def subscribe(plant_id, event):  # noqa: E501
+def subscribe(microbit_id, event):  # noqa: E501
     """Register to sensors&#39; event
 
     This can be done by 3rd party app # noqa: E501
@@ -22,9 +22,9 @@ def subscribe(plant_id, event):  # noqa: E501
     if connexion.request.is_json:
         event = connexion.request.get_json()  # noqa: E501
 
-        plant = util.get_collection('plants').find_one({'microbit': plant_id})
+        plant = util.get_collection('plants').find_one({'microbit': microbit_id})
 
-        if plant_id != event['microbit']:
+        if microbit_id != event['microbit']:
             print('qua')
             abort(400)
 
@@ -39,7 +39,7 @@ def subscribe(plant_id, event):  # noqa: E501
         events.insert_one(event)
 
         try:
-            resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(plant_id, event_counter), params=event['data'])
+            resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(microbit_id, event_counter), params=event['data'])
         except:
             pass
         
