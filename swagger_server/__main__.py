@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import connexion
-from flask.ext.cors import CORS
+from flask_cors import CORS
 
 
 def main():
