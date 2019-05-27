@@ -201,7 +201,8 @@ paths:
         - name: "event_id"
           in: "path"
           required: true
-          type: "string"
+          type: integer
+          format: int64
       responses:
         200:
           description: "Ok"

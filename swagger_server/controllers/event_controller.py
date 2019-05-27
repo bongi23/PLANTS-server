@@ -57,7 +57,7 @@ def unsubscribe(event_id):  # noqa: E501
     events = util.get_collection('events')
     plants = util.get_collection('plants')
 
-    evt = events.find_one({'id': event_id})
+    evt = events.find_one({'id': int(event_id)})
     if evt is None:
         abort(404)
 

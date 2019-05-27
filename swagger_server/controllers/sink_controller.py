@@ -102,7 +102,7 @@ def check_event(data, events):  # pragma: no cover
             event_param = e['data']
 
             if hasattr(event_param, 'sensor') is False:
-                notify.delay(data)
+                notify.delay(e['return_address'], data)
 
             elif data['sensor'] == event_param['sensor']:
                 if hasattr(event_param, 'min_value') and hasattr(event_param, 'max_value'):
