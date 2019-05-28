@@ -390,8 +390,6 @@ definitions:
     required:
       - "microbit"
       - "connected"
-      - "sink"
-      - "sensors"
     properties:
       microbit:
         type: "integer"
