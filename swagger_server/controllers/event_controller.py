@@ -38,8 +38,10 @@ def subscribe(microbit_id, event):  # noqa: E501
         events = util.get_collection('events')
         event['id'] = event_counter
         events.insert_one(event)
-
-        resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(microbit_id, event_counter), params=event['data'])
+        try:
+            resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(microbit_id, event_counter), params=event['data'])
+        except:
+            print("err")
         print(resp)
     return {'event_id': event_counter}
 
