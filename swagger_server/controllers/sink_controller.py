@@ -1,30 +1,8 @@
 import connexion
 from swagger_server import util
 from flask import abort
-from celery import Celery
-import requests
-import os
 from swagger_server.controllers.sensors_controller import put_sensors
-
-REDIS = os.environ['REDIS']
-
-
-def make_celery():
-    celery = Celery(
-        __name__,
-        backend=REDIS,
-        broker=REDIS
-    )
-
-    class ContextTask(celery.Task):
-        def __call__(self, *args, **kwargs):
-                return self.run(*args, **kwargs)
-
-    celery.Task = ContextTask
-    return celery
-
-
-celery = make_celery()
+from swagger_server.workers import check_event
 
 
 def add_plant(plant):  # noqa: E501
@@ -88,35 +66,3 @@ def set_values(plant_id, data=None):  # noqa: E501
         if len(events) != 0:
             check_event.delay(data, events)
     return 'Success'
-
-
-@celery.task()  # pragma: no cover
-def notify(address, data):  # pragma no cover
-    requests.put(address, data=data, headers={'Content-Type': 'application/json'})
-
-
-@celery.task()  # pragma: no cover
-def check_event(data, events):  # pragma: no cover
-        match_value = False
-
-        for e in events:
-            event_param = e['data']
-
-            if hasattr(event_param, 'sensor') is False:
-                notify.delay(e['return_address'], data)
-
-            elif data['sensor'] == event_param['sensor']:
-                if hasattr(event_param, 'min_value') and hasattr(event_param, 'max_value'):
-                    if event_param['min_value'] <= data['value'] <= event_param['max_value']:
-                        match_value = True
-                elif hasattr(event_param, 'min_value'):
-                    if event_param['min_value'] <= data['value']:
-                        match_value = True
-                elif hasattr(event_param, 'max_value'):
-                    if event_param['max_value'] >= data['value']:
-                        match_value = True
-                else:
-                    match_value = True
-
-                if match_value:
-                    notify.delay(e['return_address'], data)
