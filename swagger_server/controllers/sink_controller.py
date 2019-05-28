@@ -17,16 +17,14 @@ def add_plant(plant):  # noqa: E501
     """
     if connexion.request.is_json:
         plant = connexion.request.get_json()  # noqa: E501
-        # plant['network'] = 'http://192.168.50.2:8081'
-        # plant['network'] = 'http://localhost:8081'
-        # plant['network'] = 'http://'+connexion.request.remote_addr+':8081'
-    plants = util.get_collection('plants')
+        plants = util.get_collection('plants')
 
     if plants.find_one({'microbit': plant['microbit']}) is not None:
         plants.update_one({'microbit': plant['microbit']}, {"$set": plant})
-        put_sensors(plant['microbit'], plant['sensors'])
+        if hasattr(plant, 'sensors'):
+            put_sensors(plant['microbit'], plant['sensors'])
         return 'Success'
-
+    print(plant)
     plants.insert_one(plant)
     put_sensors(plant['microbit'], plant['sensors'])
 

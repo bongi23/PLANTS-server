@@ -15,8 +15,10 @@ def update_sensing_time(microbit_id, sensor_name, sensing_time):
     try:
         resp_code = requests.put(sink_address+'/sensing/{0}/{1}/time'.format(microbit_id, sensor_name),
                             params={'sampling_rate': sensing_time}).status_code
-    except:
-        resp_code = 400
+        print("Sensing "+str(resp_code))
+    except Exception as e:
+        resp_code = 500
+        print(e)
 
     if resp_code == 200:
         sensors = util.get_collection('sensors')

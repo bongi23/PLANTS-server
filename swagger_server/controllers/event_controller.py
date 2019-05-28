@@ -3,9 +3,10 @@ import connexion
 from swagger_server import util
 from flask import abort, make_response
 import requests
-
+from threading import Lock
 
 event_counter = 0
+event_counter_lock = Lock()
 
 
 def subscribe(microbit_id, event):  # noqa: E501
@@ -32,17 +33,21 @@ def subscribe(microbit_id, event):  # noqa: E501
         if plant is None:
             abort(404)
 
-        global event_counter
-        event_counter += 1
+        with event_counter_lock:
+            global event_counter
+            event_counter += 1
+            tmp = event_counter
 
         events = util.get_collection('events')
-        event['id'] = event_counter
-        events.insert_one(event)
+        event['id'] = tmp
         try:
-            resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(microbit_id, event_counter), params=event['data'])
-        except:
-            print("err")
-        print(resp)
+            resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(microbit_id, tmp), params=event['data'])
+        except Exception as e:
+            print(e)
+
+        if resp.status_code == 200:
+            events.insert_one(event)
+
     return {'event_id': event_counter}
 
 
@@ -65,11 +70,13 @@ def unsubscribe(event_id):  # noqa: E501
 
     plant = plants.find_one({'microbit': evt['microbit']})
     try:
-        resp = requests.delete(plant['network']+'/sensing/{0}/{1}'.format(plant['microbit'], event_counter))
-    except:
-        pass
+        resp = requests.delete(plant['network']+'/sensing/{0}/{1}'.format(plant['microbit'], evt['id']))
+        print('Delete event response code:' + str(resp.status_code))
+    except Exception as e:
+        print("Exception in delete event:" + str(e))
 
-    events.delete_one({'id': event_id})
+    if resp.status_code == 200 or resp.status_code == 410:
+        events.delete_one({'id': event_id})
 
     return 'Success'
 

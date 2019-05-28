@@ -44,7 +44,7 @@ celery = make_celery()
 @celery.task()  # pragma: no cover
 def notify(address, data):  # pragma no cover
     if not EMAIL_REGEX.match(address):
-        requests.put(address, data=data, headers={'Content-Type': 'application/json'})
+        requests.put(address, json=data, headers={'Content-Type': 'application/json'})
     else:
         print('Sending mails...')
 
