@@ -38,10 +38,10 @@ def subscribe(microbit_id, event):  # noqa: E501
         events = util.get_collection('events')
         event['id'] = event_counter
         events.insert_one(event)
-        #try:
-        #    resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(microbit_id, event_counter), params=event['data'])
-        #except:
-        #    print("err")
+        try:
+            resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(microbit_id, event_counter), params=event['data'])
+        except:
+            print("err")
         print(resp)
     return {'event_id': event_counter}
 
@@ -74,13 +74,13 @@ def unsubscribe(event_id):  # noqa: E501
     return 'Success'
 
 
-def get_event(microbit_id, sensor_name=None):
+def get_event(microbit_id, sensor=None):
 
     events = util.get_collection('events')
 
     res = []
-    if sensor_name is not None:
-        query = {'$and': [{'microbit': microbit_id}, {'data': {'sensor': sensor_name}}]}
+    if sensor is not None:
+        query = {'$and': [{'microbit': microbit_id}, {'data.sensor': sensor}]}
     else:
         query = {'microbit': microbit_id}
 
