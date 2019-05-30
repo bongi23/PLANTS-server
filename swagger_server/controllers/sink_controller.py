@@ -59,7 +59,8 @@ def set_values(plant_id, data=None):  # noqa: E501
         events = []
         for e in util.get_collection('events').find({'microbit': data['microbit']}):
             del e['_id']
-            events.append(e)
+            if e['return_address'] != "":
+                events.append(e)
 
         if len(events) != 0:
             check_event.delay(data, events)
