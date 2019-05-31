@@ -49,7 +49,7 @@ Your Swagger definition lives here:
 http://localhost:8080/swagger.json
 ```
 
-##Testing
+## Testing
 To launch the unit tests:
 ```
 pytest --cov-config .coveragerc --cov swagger_server swagger_server/test
