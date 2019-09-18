@@ -44,8 +44,9 @@ def subscribe(microbit_id, event):  # noqa: E501
             resp = requests.put(plant['network']+'/sensing/{0}/{1}'.format(microbit_id, tmp), params=event['data'])
         except Exception as e:
             print(e)
+            resp = None
 
-        if resp.status_code == 200:
+        if resp is not None and resp.status_code == 200:
             events.insert_one(event)
 
     return {'event_id': event_counter}
