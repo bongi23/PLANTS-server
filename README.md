@@ -29,7 +29,7 @@ In  different terminals run respectively the following 2 commands:
 ```
 redis-server
 
-celery -A swagger_server.controllers.sink_controller.celery worker
+celery -A swagger_server.workers.celery worker
 ```
 
 And now in a third terminal run

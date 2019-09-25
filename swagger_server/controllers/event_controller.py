@@ -27,7 +27,7 @@ def subscribe(microbit_id, event):  # noqa: E501
         plant = util.get_collection('plants').find_one({'microbit': microbit_id})
 
         if microbit_id != event['microbit']:
-            print('qua')
+            print('Microbit gone')
             abort(400)
 
         if plant is None:
